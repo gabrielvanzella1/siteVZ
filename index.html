@@ -3,33 +3,345 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VZ Tech · Automação com IA</title>
-  <meta name="description" content="Sistemas sob medida, automação com IA e integrações para empresas." />
+  <title>VZ Tech · Software house e consultoria</title>
+  <meta name="description" content="VZ Tech: desenvolvimento de apps, sistemas sob medida, sistemas prontos e consultoria em tecnologia para empresas." />
+  <meta name="theme-color" content="#1157EA" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
-  <!-- Esqueleto inicial: o conteúdo e o visual são definidos na sessão do site (ver CLAUDE.md). -->
-  <header class="topo">
-    <a href="#inicio" class="marca">VZ <b>Tech</b></a>
-    <nav aria-label="Principal">
+  <div class="progresso" aria-hidden="true"></div>
+
+  <!-- Ícones reaproveitados com <use> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></symbol>
+    <symbol id="i-whats" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.6-.3.4c.1.2.6 1 1.3 1.6.9.8 1.6 1 1.8 1.1.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.6-.1l1.9.9c.2.1.4.2.5.3 0 .2 0 .8-.3 1.4z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="topo" id="topo">
+    <a href="#inicio" class="marca" aria-label="VZ Tech, início">
+      <img src="assets/logo.svg" alt="" width="36" height="36" />
+      <span>VZ<b>TECH</b></span>
+    </a>
+    <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span></button>
+    <nav id="menu" aria-label="Principal">
       <a href="#servicos">Serviços</a>
-      <a href="#portfolio">Portfólio</a>
+      <a href="#apps">Apps</a>
+      <a href="#prontos">Sistemas prontos</a>
+      <a href="#consultoria">Consultoria</a>
       <a href="#sobre">Sobre</a>
-      <a href="#contato">Contato</a>
+      <a href="https://wa.me/5511996835864" class="btn btn-sm" target="_blank" rel="noopener">Fale com a gente</a>
     </nav>
   </header>
 
   <main>
-    <section id="inicio">
-      <h1>Automação com IA e sistemas sob medida</h1>
-      <p>[texto de apresentação]</p>
+    <!-- INÍCIO -->
+    <section id="inicio" class="hero">
+      <canvas id="cena3d" aria-hidden="true"></canvas>
+      <div class="hero-grade" aria-hidden="true"></div>
+      <div class="hero-conteudo">
+        <p class="kicker"><span class="pulso"></span> Software house · Consultoria</p>
+        <h1>Criamos <span class="troca" data-palavras="apps|sistemas|plataformas|integrações">apps</span><br />que colocam sua empresa no futuro.</h1>
+        <p class="lead">Do app no celular ao sistema da sua empresa: projetamos, desenvolvemos e mantemos software sob medida.</p>
+        <div class="acoes">
+          <a href="https://wa.me/5511996835864?text=Ol%C3%A1!%20Quero%20falar%20sobre%20um%20projeto." class="btn" target="_blank" rel="noopener">Começar um projeto</a>
+          <a href="#apps" class="btn btn-fantasma">Ver nossos apps</a>
+        </div>
+        <ul class="selos">
+          <li>Apps Android &amp; iOS</li>
+          <li>Sistemas prontos para implantar</li>
+          <li>Sistemas web e integrações</li>
+        </ul>
+      </div>
+      <a href="#servicos" class="rolar" aria-label="Rolar para os serviços"><span></span></a>
     </section>
-    <section id="servicos"><h2>Serviços</h2><p>[sistemas web · automação com IA · integrações]</p></section>
-    <section id="portfolio"><h2>Portfólio</h2><p>[projetos]</p></section>
-    <section id="sobre"><h2>Sobre</h2><p>[sobre a VZ Tech]</p></section>
-    <section id="contato"><h2>Contato</h2><p>[WhatsApp e e-mail]</p></section>
+
+    <!-- FAIXA DE TECNOLOGIAS -->
+    <div class="faixa" aria-label="Tecnologias que usamos">
+      <div class="faixa-trilho">
+        <span>React Native</span><span>Expo</span><span>Android</span><span>iOS</span><span>Node.js</span><span>Python</span><span>PHP</span><span>APIs REST</span><span>IA</span><span>WhatsApp API</span><span>MySQL</span><span>PostgreSQL</span><span>Cloud</span><span>Automação</span>
+        <span aria-hidden="true">React Native</span><span aria-hidden="true">Expo</span><span aria-hidden="true">Android</span><span aria-hidden="true">iOS</span><span aria-hidden="true">Node.js</span><span aria-hidden="true">Python</span><span aria-hidden="true">PHP</span><span aria-hidden="true">APIs REST</span><span aria-hidden="true">IA</span><span aria-hidden="true">WhatsApp API</span><span aria-hidden="true">MySQL</span><span aria-hidden="true">PostgreSQL</span><span aria-hidden="true">Cloud</span><span aria-hidden="true">Automação</span>
+      </div>
+    </div>
+
+    <!-- MANIFESTO: as palavras acendem conforme a rolagem -->
+    <section class="manifesto" aria-label="Quem somos">
+      <div class="manifesto-pino">
+        <p class="kicker">Quem somos</p>
+        <p class="manifesto-texto">Começamos consertando computadores e celulares. De perto, vimos empresas perdendo horas com planilhas, retrabalho e sistemas que não conversam. Então passamos a criar <em>o software que faltava.</em> Hoje a VZ Tech é uma <em>software house:</em> apps, sistemas e integrações <em>sob medida,</em> com o mesmo atendimento próximo de sempre.</p>
+      </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section id="servicos" class="secao">
+      <span class="orbe orbe-1" data-paralaxe="-0.15" aria-hidden="true"></span>
+      <span class="orbe orbe-2" data-paralaxe="0.2" aria-hidden="true"></span>
+      <header class="secao-topo revela">
+        <p class="kicker">O que fazemos</p>
+        <h2>Tecnologia sob medida, do protótipo à produção</h2>
+        <p>Cada projeto nasce de um problema real do seu negócio, e a gente escolhe a tecnologia certa para resolvê-lo.</p>
+      </header>
+      <div class="cards">
+        <article class="card tilt revela destaque">
+          <div class="icone"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4"/></svg></div>
+          <h3>Desenvolvimento de apps</h3>
+          <p>Apps Android e iOS com uma base de código só, publicados nas lojas e integrados ao seu sistema.</p>
+        </article>
+        <article class="card tilt revela">
+          <div class="icone"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></div>
+          <h3>Sistemas web sob medida</h3>
+          <p>Painéis, ERPs e plataformas feitos para o seu processo, e não o contrário.</p>
+        </article>
+        <article class="card tilt revela">
+          <div class="icone"><svg viewBox="0 0 24 24"><path d="M8 7h8a4 4 0 010 8h-1M16 17H8a4 4 0 010-8h1"/></svg></div>
+          <h3>Integrações e APIs</h3>
+          <p>Conectamos ERPs, sistemas contábeis, WhatsApp e serviços de terceiros para os dados fluírem sem retrabalho.</p>
+        </article>
+        <article class="card tilt revela">
+          <div class="icone"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></div>
+          <h3>Automação de processos</h3>
+          <p>Tarefas repetitivas viram rotinas automáticas: relatórios, conciliações, cadastros e notificações.</p>
+        </article>
+        <article class="card tilt revela">
+          <div class="icone"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></div>
+          <h3>Sites e plataformas</h3>
+          <p>Sites institucionais, landing pages e portais rápidos, bonitos e prontos para converter.</p>
+        </article>
+        <article class="card tilt revela">
+          <div class="icone"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"/></svg></div>
+          <h3>Inteligência artificial</h3>
+          <p>Recursos de IA dentro do seu sistema ou app: assistentes, leitura de documentos e respostas automáticas.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- TECNOLOGIAS: logos coloridos -->
+    <section class="secao secao-clara tecnologias" aria-label="Tecnologias que usamos">
+      <header class="secao-topo revela">
+        <p class="kicker">Nossa caixa de ferramentas</p>
+        <h2>As tecnologias mais usadas do mercado</h2>
+      </header>
+      <div class="logos revela">
+        <div class="logos-trilho">
+          <figure><img src="assets/tech/react.svg" alt="" loading="lazy" /><figcaption>React Native</figcaption></figure>
+          <figure><img src="assets/tech/android.svg" alt="" loading="lazy" /><figcaption>Android</figcaption></figure>
+          <figure><img src="assets/tech/apple.svg" alt="" loading="lazy" /><figcaption>iOS</figcaption></figure>
+          <figure><img src="assets/tech/flutter.svg" alt="" loading="lazy" /><figcaption>Flutter</figcaption></figure>
+          <figure><img src="assets/tech/nodejs.svg" alt="" loading="lazy" /><figcaption>Node.js</figcaption></figure>
+          <figure><img src="assets/tech/typescript.svg" alt="" loading="lazy" /><figcaption>TypeScript</figcaption></figure>
+          <figure><img src="assets/tech/javascript.svg" alt="" loading="lazy" /><figcaption>JavaScript</figcaption></figure>
+          <figure><img src="assets/tech/python.svg" alt="" loading="lazy" /><figcaption>Python</figcaption></figure>
+        </div>
+        <div class="logos-trilho reverso">
+          <figure><img src="assets/tech/php.svg" alt="" loading="lazy" /><figcaption>PHP</figcaption></figure>
+          <figure><img src="assets/tech/laravel.svg" alt="" loading="lazy" /><figcaption>Laravel</figcaption></figure>
+          <figure><img src="assets/tech/mysql.svg" alt="" loading="lazy" /><figcaption>MySQL</figcaption></figure>
+          <figure><img src="assets/tech/postgresql.svg" alt="" loading="lazy" /><figcaption>PostgreSQL</figcaption></figure>
+          <figure><img src="assets/tech/firebase.svg" alt="" loading="lazy" /><figcaption>Firebase</figcaption></figure>
+          <figure><img src="assets/tech/googlecloud.svg" alt="" loading="lazy" /><figcaption>Google Cloud</figcaption></figure>
+          <figure><img src="assets/tech/docker.svg" alt="" loading="lazy" /><figcaption>Docker</figcaption></figure>
+          <figure><img src="assets/tech/git.svg" alt="" loading="lazy" /><figcaption>Git</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPS: um bloco por app, com celular 3D que gira seguindo o mouse.
+         Telas desenhadas em CSS; para usar prints reais, trocar o conteúdo de .tela por <img src="assets/apps/....png" alt=""> -->
+    <section id="apps" class="secao secao-azul">
+      <header class="secao-topo revela">
+        <p class="kicker">Apps de exemplo</p>
+        <h2>Ideias que já saíram do papel</h2>
+        <p>Alguns apps e plataformas que desenvolvemos. Passe o mouse e gire o celular.</p>
+      </header>
+
+      <article class="vitrine-app">
+        <div class="palco revela">
+          <div class="cel3d"><div class="cel-frente"><span class="ilha"></span>
+            <div class="tela tela-scan"><b>ScanTE</b><small>Aponte para o código</small><div class="mira"><span class="feixe"></span></div><i>Item 0041 ✓</i><i>Item 0042 ✓</i></div>
+          </div></div>
+        </div>
+        <div class="vitrine-texto revela">
+          <span class="num">01</span>
+          <h3>ScanTE</h3>
+          <p>Leitura e conferência pela câmera do celular, com os dados sincronizados na hora com o sistema da empresa.</p>
+          <ul class="tags"><li>Android</li><li>iOS</li><li>Câmera</li></ul>
+        </div>
+      </article>
+
+      <article class="vitrine-app">
+        <div class="palco revela">
+          <div class="cel3d"><div class="cel-frente"><span class="ilha"></span>
+            <div class="tela tela-estudo"><b>Sua trilha</b><small>Etapa 3 de 12</small><i class="ok"></i><i class="ok"></i><i class="atual"></i><i></i><i></i></div>
+          </div></div>
+        </div>
+        <div class="vitrine-texto revela">
+          <span class="num">02</span>
+          <h3>Plataforma de estudos</h3>
+          <p>Trilhas e etapas no estilo Duolingo para concurseiros, com questões geradas e explicadas por IA.</p>
+          <ul class="tags"><li>Web</li><li>Mobile</li><li>IA</li></ul>
+        </div>
+      </article>
+
+      <article class="vitrine-app">
+        <div class="palco revela">
+          <div class="cel3d"><div class="cel-frente"><span class="ilha"></span>
+            <div class="tela tela-term"><code>$ ssh coletor01<br />conectado ✓<br /><br />&gt; PICKING 0042<br />&gt; ENDERECO A-12-03<br />&gt; QTD 24<br />&gt; OK_<span class="cursor"></span></code></div>
+          </div></div>
+        </div>
+        <div class="vitrine-texto revela">
+          <span class="num">03</span>
+          <h3>Coletores</h3>
+          <p>Terminal SSH/Telnet para Android, feito para os coletores de dados das operações de logística.</p>
+          <ul class="tags"><li>Android</li><li>Logística</li></ul>
+        </div>
+      </article>
+
+      <article class="vitrine-app">
+        <div class="palco revela">
+          <div class="cel3d"><div class="cel-frente"><span class="ilha"></span>
+            <div class="tela tela-chat"><b>Assistente</b><small>online</small><span class="msg eu">Me ajuda com um acorde?</span><span class="msg ia">Claro! Tente Am7 → D9 🎵</span><span class="msg eu">Perfeito, obrigado!</span></div>
+          </div></div>
+        </div>
+        <div class="vitrine-texto revela">
+          <span class="num">04</span>
+          <h3>Assistente no WhatsApp</h3>
+          <p>Um assistente que conversa pelo WhatsApp e responde com contexto e personalidade, a qualquer hora.</p>
+          <ul class="tags"><li>WhatsApp</li><li>IA</li></ul>
+        </div>
+      </article>
+
+      <div class="app-cta revela">
+        <h3>O próximo app pode ser o seu.</h3>
+        <p>Conte a ideia. A gente desenha, desenvolve e publica nas lojas.</p>
+        <a href="https://wa.me/5511996835864?text=Ol%C3%A1!%20Tenho%20uma%20ideia%20de%20app." class="btn btn-branco" target="_blank" rel="noopener">Tirar a ideia do papel</a>
+      </div>
+    </section>
+
+    <!-- SISTEMAS PRONTOS -->
+    <section id="prontos" class="secao">
+      <header class="secao-topo revela">
+        <p class="kicker">Sistemas prontos</p>
+        <h2>Implante em dias, não em meses</h2>
+        <p>Soluções já testadas em operação real, que a gente adapta à sua marca e ao seu processo.</p>
+      </header>
+      <div class="prontos">
+        <article class="pronto tilt revela">
+          <span class="selo-pronto">Pronto para usar</span>
+          <h3>Gestão de ativos de TI</h3>
+          <p>Inventário de equipamentos, responsáveis, movimentações e manutenção, com histórico completo.</p>
+          <a href="https://wa.me/5511996835864?text=Quero%20uma%20demonstra%C3%A7%C3%A3o%20do%20sistema%20de%20gest%C3%A3o%20de%20ativos." target="_blank" rel="noopener">Pedir demonstração →</a>
+        </article>
+        <article class="pronto tilt revela">
+          <span class="selo-pronto">Pronto para usar</span>
+          <h3>Delivery com cardápio digital</h3>
+          <p>Loja online, pedidos pelo celular e painel para acompanhar cada entrega.</p>
+          <a href="https://wa.me/5511996835864?text=Quero%20uma%20demonstra%C3%A7%C3%A3o%20do%20sistema%20de%20delivery." target="_blank" rel="noopener">Pedir demonstração →</a>
+        </article>
+        <article class="pronto tilt revela">
+          <span class="selo-pronto">Pronto para usar</span>
+          <h3>Atendimento automático no WhatsApp</h3>
+          <p>Assistente que responde clientes no WhatsApp, agenda horários e passa para um humano quando precisa.</p>
+          <a href="https://wa.me/5511996835864?text=Quero%20uma%20demonstra%C3%A7%C3%A3o%20do%20atendimento%20autom%C3%A1tico." target="_blank" rel="noopener">Pedir demonstração →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- COMO TRABALHAMOS -->
+    <section class="secao secao-clara">
+      <header class="secao-topo revela">
+        <p class="kicker">Como trabalhamos</p>
+        <h2>Do primeiro papo ao software no ar</h2>
+      </header>
+      <ol class="passos">
+        <li class="revela"><span>01</span><h3>Diagnóstico</h3><p>Entendemos o problema, o processo e o resultado esperado.</p></li>
+        <li class="revela"><span>02</span><h3>Protótipo</h3><p>Você vê e testa as telas antes de começarmos a programar.</p></li>
+        <li class="revela"><span>03</span><h3>Desenvolvimento</h3><p>Entregas curtas e frequentes, com você acompanhando cada etapa.</p></li>
+        <li class="revela"><span>04</span><h3>Entrega e suporte</h3><p>Publicação, treinamento e evolução contínua do sistema.</p></li>
+      </ol>
+    </section>
+
+    <!-- CONSULTORIA -->
+    <section id="consultoria" class="secao">
+      <div class="consultoria revela">
+        <div>
+          <p class="kicker">Consultoria</p>
+          <h2>Precisa de direção em tecnologia? A gente mostra o caminho.</h2>
+          <p>Uma consultoria prática para empresas que querem usar tecnologia de verdade, sem modismo e sem desperdício.</p>
+          <a href="https://wa.me/5511996835864?text=Quero%20saber%20mais%20sobre%20a%20consultoria." class="btn" target="_blank" rel="noopener">Agendar uma conversa</a>
+        </div>
+        <ul class="lista-check">
+          <li><b>Diagnóstico de processos</b>Onde a automação traz retorno no seu negócio.</li>
+          <li><b>Roadmap de tecnologia</b>Um plano por etapas, com prioridades, custos e prazos.</li>
+          <li><b>Arquitetura e escolha de tecnologia</b>A ferramenta certa antes de investir em desenvolvimento.</li>
+          <li><b>TI para empresas</b>Infraestrutura, redes, inventário e suporte para a equipe.</li>
+          <li><b>Treinamento de equipes</b>Seu time aproveitando as novas ferramentas no dia a dia, com segurança.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre" class="secao secao-clara">
+      <header class="secao-topo revela">
+        <p class="kicker">Nossa trajetória</p>
+        <h2>Da bancada de conserto ao código</h2>
+        <p>Ficamos em Várzea Paulista (SP) e atendemos empresas da região de Jundiaí e de todo o Brasil, remotamente.</p>
+      </header>
+      <!-- A linha azul se desenha conforme a rolagem (JS ajusta --progresso) -->
+      <ol class="trajetoria">
+        <li class="revela"><span class="marco">01</span><h3>Assistência técnica</h3><p>Celulares, notebooks e impressoras. Aprendemos a resolver rápido e com garantia.</p></li>
+        <li class="revela"><span class="marco">02</span><h3>TI para empresas</h3><p>Suporte, redes, servidores e inventário. Entramos na rotina das empresas.</p></li>
+        <li class="revela"><span class="marco">03</span><h3>Sistemas e apps</h3><p>Os problemas pediam software. Criamos os primeiros sistemas e apps sob medida.</p></li>
+        <li class="revela"><span class="marco"><img src="assets/logo.svg" alt="" width="40" height="40" /></span><h3>Software house</h3><p>Hoje: desenvolvimento, sistemas prontos e consultoria em tecnologia.</p></li>
+      </ol>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="secao secao-azul contato">
+      <div class="revela">
+        <p class="kicker">Contato</p>
+        <h2>Vamos tirar sua ideia do papel?</h2>
+        <p>Conte o que você precisa. A resposta chega rápido, sem compromisso.</p>
+        <div class="contatos">
+          <a href="https://wa.me/5511996835864" target="_blank" rel="noopener" class="contato-item">
+            <svg class="contato-icone whats"><use href="#i-whats" /></svg>
+            <span><small>WhatsApp</small><b>(11) 99683-5864</b></span>
+          </a>
+          <a href="mailto:gabrielvanzella1@gmail.com" class="contato-item">
+            <svg class="contato-icone mail"><use href="#i-mail" /></svg>
+            <span><small>E-mail</small><b>gabrielvanzella1@gmail.com</b></span>
+          </a>
+          <a href="https://www.instagram.com/vztech.assistencia/" target="_blank" rel="noopener" class="contato-item">
+            <svg class="contato-icone insta"><use href="#i-insta" /></svg>
+            <span><small>Instagram</small><b>@vztech.assistencia</b></span>
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer>VZ Tech · [razão social] · CNPJ [número]</footer>
+  <footer class="rodape">
+    <a href="#inicio" class="marca">
+      <img src="assets/logo.svg" alt="" width="32" height="32" />
+      <span>VZ<b>TECH</b></span>
+    </a>
+    <nav class="redes" aria-label="Redes sociais">
+      <a href="https://www.instagram.com/vztech.assistencia/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-insta" /></svg></a>
+      <a href="https://wa.me/5511996835864" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-whats" /></svg></a>
+      <a href="mailto:gabrielvanzella1@gmail.com" aria-label="E-mail"><svg><use href="#i-mail" /></svg></a>
+    </nav>
+    <small>© 2026 VZ Tech · Software house e consultoria · [razão social] · CNPJ [número]</small>
+  </footer>
+
+  <a href="https://wa.me/5511996835864" class="whats-flutuante" target="_blank" rel="noopener" aria-label="Conversar no WhatsApp">
+    <svg><use href="#i-whats" /></svg>
+  </a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" integrity="sha384-eD5ubmuCcvTdCADWuSchJYE7wcj2nzNr0itbrh6w/KJyBiltSZ8w3VFRBSWu5YQ8" crossorigin="anonymous" defer></script>
+  <script src="assets/main.js" defer></script>
 </body>
 </html>

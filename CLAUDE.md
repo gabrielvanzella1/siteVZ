@@ -19,6 +19,25 @@ O site precisa passar a credibilidade de uma empresa de software. Fica pronto an
 - **Site estático:** HTML, CSS e um pouco de JS, sem etapa de build. Publicado na Hostinger.
 - **Domínio:** ainda não existe. O Gabriel compra até 2026-10-07. Até lá, o site é desenvolvido localmente (http://localhost/vztech/ pelo XAMPP, ou abrindo o `index.html`).
 
+## Nova direção (2026-10-06, Gabriel)
+
+- A VZ Tech está deixando de ser **assistência técnica** e virando **software house e consultoria**. O Instagram (@vztech.assistencia) vai mudar, mas o **logo continua** (ícone de servidor + "VZTECH", recriado em `assets/logo.svg`).
+- O site é **tecnológico**: tema escuro, animações, cena 3D (Three.js) no topo.
+- Seções: serviços (apps, sistemas, integrações, automação, sites e IA). **A IA é só mais um serviço**, sem destaque: nada de "Desenvolvimento com IA" nem de IA no topo, no processo ou na consultoria, apps de exemplo, **sistemas prontos**, como trabalhamos, **consultoria**, sobre e contato.
+- **Não incluir** o sistema de oficina.
+- WhatsApp: (11) 99683-5864. Região: Várzea Paulista / Jundiaí.
+
+- **Visual (2026-10-06, 2ª rodada):** fundo branco brincando com azul brilhante; navegação como "descobrir aos poucos": manifesto que acende com a rolagem, trajetória com linha que se desenha, rolagem suave (Lenis), parallax, logos coloridos de tecnologias (`assets/tech/`, da Devicon), ícones de redes, e apps em blocos com celular 3D que gira com o mouse.
+- Logos de **parceiros/clientes** só com autorização; por enquanto são logos de tecnologias.
+
+## Próximos passos (retomar em 2026-10-07)
+
+- [ ] Conferir a rolagem horizontal de ~18px no computador (a faixa inclinada; `overflow-x: clip` no body pode não bastar)
+- [ ] O Windows deste PC está com "reduzir movimento" ligado: o site respeita isso e mostra tudo parado. Para ver as animações, ligar "Efeitos de animação" no Windows (ou testar no celular)
+- [ ] Revisar o site inteiro com as animações ligadas (manifesto, trajetória, celulares 3D) e no celular
+- [ ] Trocar as telas desenhadas em CSS pelos prints reais dos apps
+- [ ] Repositório remoto: o Gabriel vai criar o projeto e mandar o link
+
 ## Pendências (perguntar ao Gabriel)
 
 - [ ] Domínio e onde publicar (conta Hostinger)
