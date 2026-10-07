@@ -36,7 +36,7 @@ O site precisa passar a credibilidade de uma empresa de software. Fica pronto an
 - [ ] O Windows deste PC está com "reduzir movimento" ligado: o site respeita isso e mostra tudo parado. Para ver as animações, ligar "Efeitos de animação" no Windows (ou testar no celular)
 - [ ] Revisar o site inteiro com as animações ligadas (manifesto, trajetória, celulares 3D) e no celular
 - [ ] Trocar as telas desenhadas em CSS pelos prints reais dos apps
-- [ ] Repositório remoto: o Gabriel vai criar o projeto e mandar o link
+- [x] Repositório: https://github.com/gabrielvanzella1/siteVZ (branch main)
 
 ## Pendências (perguntar ao Gabriel)
 
