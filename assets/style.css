@@ -1,0 +1,21 @@
+/* Cores da identidade VZ Tech (as mesmas do orçamento do ContabiA). */
+:root {
+  --azul: #0B40CE;
+  --azul-claro: #1157EA;
+  --azul-escuro: #0A2D89;
+  --fundo: #EAF0FD;
+  --tinta: #111827;
+  --tinta-2: #4A5468;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; color: var(--tinta); background: #fff; line-height: 1.6; }
+.topo { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem clamp(1rem, 5vw, 4rem); }
+.marca { font-weight: 800; font-size: 1.25rem; color: var(--tinta); text-decoration: none; }
+.marca b { color: var(--azul); }
+nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+nav a { color: var(--tinta-2); text-decoration: none; }
+nav a:hover { color: var(--azul); }
+section { padding: 4rem clamp(1rem, 5vw, 4rem); }
+section:nth-child(even) { background: var(--fundo); }
+footer { padding: 2rem clamp(1rem, 5vw, 4rem); color: var(--tinta-2); font-size: .9rem; }
