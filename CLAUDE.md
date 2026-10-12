@@ -40,7 +40,7 @@ O site precisa passar a credibilidade de uma empresa de software. Fica pronto an
 
 ## Pendências (perguntar ao Gabriel)
 
-- [ ] Domínio e onde publicar (conta Hostinger)
+- [ ] Domínio e onde publicar: **hospedagem própria do Gabriel**, separada da sociedade com o Jorge (o ContabiA e o site da Conthax ficam na hospedagem ou VPS da sociedade). Decidido em 2026-10-12.
 - [ ] CNPJ e razão social da VZ Tech, para o rodapé
 - [ ] Quais projetos entram no portfólio e o que pode ser mostrado (prints, nomes). Há projetos em `C:\xampp\htdocs` (hortifrut/delivery, oficina, estuda-concursos…)
 - [ ] WhatsApp e e-mail de contato. Hoje é gabrielvanzella1@gmail.com; um e-mail do domínio passa mais credibilidade
