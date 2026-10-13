@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integração com ERP: como acabar com a digitação dupla entre sistemas · Blog VZ</title>
+  <meta name="description" content="Como funciona a integração entre sistemas e ERP, quais dados dá para sincronizar e o que observar antes de começar um projeto de integração." />
+  <link rel="canonical" href="https://vztecnologia.com.br/blog/integracao-com-erp.html" />
+  <meta name="theme-color" content="#1157EA" />
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="VZ Soluções em Tecnologia" />
+  <meta property="og:title" content="Integração com ERP: como acabar com a digitação dupla entre sistemas · Blog VZ" />
+  <meta property="og:description" content="Como funciona a integração entre sistemas e ERP, quais dados dá para sincronizar e o que observar antes de começar um projeto de integração." />
+  <meta property="og:url" content="https://vztecnologia.com.br/blog/integracao-com-erp.html" />
+  <meta property="og:image" content="https://vztecnologia.com.br/assets/marca/og-vz.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Integração com ERP: como acabar com a digitação dupla entre sistemas",
+  "description": "Como funciona a integração entre sistemas e ERP, quais dados dá para sincronizar e o que observar antes de começar um projeto de integração.",
+  "datePublished": "2026-10-13",
+  "dateModified": "2026-10-13",
+  "inLanguage": "pt-BR",
+  "mainEntityOfPage": "https://vztecnologia.com.br/blog/integracao-com-erp.html",
+  "image": "https://vztecnologia.com.br/assets/marca/og-vz.jpg",
+  "author": {
+    "@type": "Organization",
+    "name": "VZ Soluções em Tecnologia",
+    "url": "https://vztecnologia.com.br/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://vztecnologia.com.br/assets/marca/logo-vz-claro.webp"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VZ Soluções em Tecnologia",
+    "url": "https://vztecnologia.com.br/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://vztecnologia.com.br/assets/marca/logo-vz-claro.webp"
+    }
+  }
+}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css" />
+  <script src="../assets/analytics.js" defer></script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></symbol>
+    <symbol id="i-whats" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.6-.3.4c.1.2.6 1 1.3 1.6.9.8 1.6 1 1.8 1.1.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.6-.1l1.9.9c.2.1.4.2.5.3 0 .2 0 .8-.3 1.4z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="topo topo-interno">
+    <a href="../" class="marca" aria-label="VZ Soluções em Tecnologia, página inicial">
+      <img class="logo-vz" src="../assets/marca/logo-vz-claro.webp" alt="" width="902" height="421" />
+    </a>
+    <nav aria-label="Blog">
+      <a href="../consultoria/">Consultoria</a>
+      <a href="./">Blog</a>
+      <a href="https://wa.me/5511964981181?text=Ol%C3%A1%2C%20vim%20pelo%20blog%20da%20VZ%20e%20quero%20conversar%20sobre%20um%20projeto." class="btn btn-sm" target="_blank" rel="noopener">Fale com a gente</a>
+    </nav>
+  </header>
+
+  <main id="conteudo" class="post">
+    <article>
+      <a href="./" class="voltar">← Todos os artigos</a>
+      <h1>Integração com ERP: como acabar com a digitação dupla entre sistemas</h1>
+      <p class="post-data"><time datetime="2026-10-13">13 de outubro de 2026</time> · VZ Soluções em Tecnologia</p>
+
+      <p>Pedidos que chegam por um sistema e precisam ser digitados no ERP. Notas que saem do financeiro e são lançadas de novo na contabilidade. Estoque que só bate depois de alguém conferir à mão. Quando os sistemas de uma empresa não conversam, a equipe vira a ponte entre eles, e é aí que aparecem o retrabalho e os erros.</p>
+
+      <h2>O que é uma integração</h2>
+      <p>Integrar é fazer dois ou mais sistemas trocarem informações automaticamente. Em vez de alguém copiar um pedido de uma tela para outra, o pedido sai de um sistema e entra no outro sozinho, no formato certo, na hora certa.</p>
+
+      <h2>O que dá para integrar</h2>
+      <ul>
+        <li><strong>Cadastros:</strong> clientes, fornecedores e produtos iguais em todos os sistemas.</li>
+        <li><strong>Pedidos e vendas:</strong> do e-commerce, do app ou do WhatsApp direto para o ERP.</li>
+        <li><strong>Financeiro e fiscal:</strong> lançamentos, notas e documentos indo para a contabilidade.</li>
+        <li><strong>Estoque e logística:</strong> separação e conferência feitas em coletores atualizando o sistema na hora.</li>
+        <li><strong>Atendimento:</strong> mensagens de WhatsApp gerando chamados, orçamentos ou cadastros.</li>
+      </ul>
+
+      <h2>Como a integração acontece</h2>
+      <p>Depende do que cada sistema oferece:</p>
+      <ul>
+        <li><strong>API:</strong> o jeito mais seguro e moderno. Um sistema chama o outro e os dados trafegam em tempo real.</li>
+        <li><strong>Arquivos:</strong> quando não há API, um sistema exporta um arquivo (por exemplo, TXT ou XML) num layout combinado e o outro importa.</li>
+        <li><strong>Banco de dados:</strong> em sistemas internos, a leitura direta dos dados, com cuidado para não comprometer a segurança.</li>
+      </ul>
+
+      <h2>O que observar antes de começar</h2>
+      <ol>
+        <li><strong>Qual sistema é a fonte da verdade</strong> para cada informação. Se o cliente pode ser alterado nos dois lados, alguém precisa ganhar.</li>
+        <li><strong>A frequência:</strong> tempo real, a cada hora ou uma vez por dia. Nem tudo precisa ser instantâneo.</li>
+        <li><strong>O que fazer quando der erro:</strong> um registro rejeitado precisa avisar alguém, e não sumir em silêncio.</li>
+        <li><strong>Segurança e LGPD:</strong> só trafegar os dados necessários, por conexões protegidas e com acesso controlado.</li>
+        <li><strong>A documentação do fornecedor:</strong> muitos ERPs têm layouts e programas de parceria próprios para integração.</li>
+      </ol>
+
+      <h2>O resultado</h2>
+      <p>Uma boa integração não aparece: a equipe simplesmente para de copiar e colar. Os números passam a bater, o fechamento do mês fica mais rápido e as pessoas voltam a trabalhar no que exige atenção humana.</p>
+
+      <aside class="post-cta">
+        <h2>Quer conversar sobre o seu caso?</h2>
+        <p>Conte o que a sua empresa precisa. A gente analisa e responde com o próximo passo.</p>
+        <a href="https://wa.me/5511964981181?text=Ol%C3%A1%2C%20vim%20pelo%20blog%20da%20VZ%20e%20quero%20conversar%20sobre%20um%20projeto." class="btn btn-branco" target="_blank" rel="noopener">Falar no WhatsApp</a>
+      </aside>
+    </article>
+  </main>
+
+  <footer class="rodape">
+    <a href="../" class="marca" aria-label="VZ Soluções em Tecnologia, página inicial">
+      <img class="logo-vz" src="../assets/marca/logo-vz-escuro.webp" alt="" width="805" height="405" loading="lazy" />
+    </a>
+    <nav class="redes" aria-label="Redes sociais">
+      <a href="https://www.instagram.com/vztech.assistencia/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-insta" /></svg></a>
+      <a href="https://wa.me/5511964981181?text=Ol%C3%A1%2C%20vim%20pelo%20blog%20da%20VZ%20e%20quero%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-whats" /></svg></a>
+      <a href="mailto:contato@vztecnologia.com.br" aria-label="E-mail"><svg><use href="#i-mail" /></svg></a>
+    </nav>
+    <small>© 2026 VZ Soluções em Tecnologia · Software house e consultoria<br />CNPJ&nbsp;61.274.889/0001-90</small>
+  </footer>
+
+  <a href="https://wa.me/5511964981181?text=Ol%C3%A1%2C%20vim%20pelo%20blog%20da%20VZ%20e%20quero%20conversar%20sobre%20um%20projeto." class="whats-flutuante" target="_blank" rel="noopener" aria-label="Conversar no WhatsApp">
+    <svg><use href="#i-whats" /></svg>
+  </a>
+</body>
+</html>

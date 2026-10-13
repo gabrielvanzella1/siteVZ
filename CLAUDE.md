@@ -61,17 +61,23 @@ O site precisa passar a credibilidade de uma empresa de software. Fica pronto an
 - [x] Textos finais dos serviços revisados (2026-10-13, Gabriel)
 - [x] Caminho de contato reforçado (2026-10-13): CTAs principais abrem WhatsApp com mensagem contextual; links WhatsApp/e-mail geram evento `contact_click` no `dataLayer`, com método e posição do CTA.
 - [x] Sinais de confiança revisados (2026-10-13): contato exibe a marca, localização em Jundiaí - SP e CNPJ; logos publicados seguem autorizações já registradas. A promessa vaga de resposta rápida foi substituída por uma explicação do próximo passo.
-- [ ] Conectar medição a GA4 via Google Tag Manager: eventos `contact_click` já estão instrumentados em `assets/main.js`; falta o ID do contêiner GTM/GA4 para enviar dados à conta. Até conectar, os eventos ficam apenas no `dataLayer` local da página.
+- [ ] **Google Analytics 4** (2026-10-13): direto pelo gtag, sem Tag Manager, em `assets/analytics.js` (site e blog). Falta o Gabriel criar a propriedade e mandar o ID `G-...` para trocar em `GA_ID`; enquanto for o marcador, nada do Google carrega. Tem aviso de cookies (LGPD) com modo de consentimento do Google. O evento `contact_click` (WhatsApp/e-mail, com meio e posição) saiu do `main.js` e foi para o `analytics.js`.
+- [ ] **Google (2026-10-13):** guia completo em `docs/google.md` (Analytics, Search Console via TXT no Cloudflare, Perfil da Empresa, Bing, redirecionamento do www). O Gabriel segue os passos; o site já tem canonical, Open Graph (`assets/marca/og-vz.jpg`), JSON-LD da empresa, `robots.txt` (bloqueia `/active/`) e `sitemap.xml`.
 - [ ] Atualizar o link do Instagram quando o perfil migrar de @vztech.assistencia para a marca VZ Soluções em Tecnologia.
 
 ## Publicar (Hostinger)
 
 - O site usa a hospedagem própria do Gabriel: `ssh hostinger-scante` (alias no `~/.ssh/config`), pasta `~/domains/vztecnologia.com.br/public_html`. Na frente fica o Cloudflare (o e-mail aparece como `email-protection` no HTML: é a proteção dele, o navegador mostra normal).
 - **O `public_html` é dividido**: tem o sistema PHP `active/` (gestão de ativos, responde 403 na raiz), um backup `active.bak_*`, o `default.php` da Hostinger e um `.htaccess` com regra de IP do hPanel. **Nunca** usar o deploy de site estático da Hostinger (`hosting_deployStaticSiteArchiveV1`): ele apaga a pasta inteira.
-- Como publicar: zip só com `index.html` + os `assets/` citados → `scp` para `~/` → `unzip -o` dentro do `public_html` → `chmod 644` nos arquivos e `755` nas pastas (o zip do Windows traz 666) → conferir com `curl` **a partir do servidor**.
+- Como publicar: zip só com `index.html`, `robots.txt`, `sitemap.xml`, as pastas `blog/` e `consultoria/` e os `assets/` citados (nunca `docs/`, `web kit vz/` nem `CLAUDE.md`) → `scp` para `~/` → `unzip -o` dentro do `public_html` → `chmod 644` nos arquivos e `755` nas pastas (o zip do Windows traz 666) → conferir com `curl` **a partir do servidor**.
 - Nesta rede da empresa, o firewall (Fortinet) intercepta o HTTPS do `auth.hostinger.com` e do próprio vztecnologia.com.br. Por isso o MCP da Hostinger não loga e o site não abre direto daqui. O SSH (porta 65002) passa.
 
 ## Estrutura
 
 - `index.html`: página única: Início, Quem somos, Serviços, Consultoria, Tecnologias, Cases, Clientes, Sistemas prontos, Como trabalhamos e Contato
+- `blog/`: `index.html` (lista) e um `.html` por artigo, com caminhos relativos (`../assets/`). Artigo novo: copiar um existente, trocar título, description, canonical, og, JSON-LD e texto; acrescentar na lista do `blog/index.html` (mais novo primeiro) e no `sitemap.xml`. Os 3 primeiros (2026-10-13) foram escritos pelo Claude e precisam da revisão do Gabriel
+- `consultoria/index.html` (2026-10-13, pedido do Gabriel: página própria "com mais informações"): para quem é, as 5 frentes detalhadas, como funciona (linha fixa, sem JS), entregáveis, formatos (diagnóstico pontual e acompanhamento contínuo), perguntas frequentes (com JSON-LD FAQPage) e chamada final. O menu "Consultoria" da página inicial leva para ela; a seção da página inicial ficou como resumo com o botão "Conheça a consultoria". Textos escritos pelo Claude, a revisar com o Gabriel: os formatos e a frase "o plano é seu: dá para executar com outro fornecedor" são promessas comerciais
+- Páginas internas (blog e consultoria) usam o cabeçalho `.topo-interno` e não carregam o `main.js` (ele é só da página inicial)
+- `robots.txt` e `sitemap.xml` na raiz (o Cloudflare acrescenta comentários próprios no começo do robots.txt; é normal)
+- `docs/`: guias internos, não vão para a hospedagem
 - `assets/`: estilos, scripts e imagens

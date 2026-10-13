@@ -3,28 +3,6 @@ const reduzir = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const limitar = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
 const escapar = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-// Eventos de intenção de contato: prontos para receber uma tag GA4 via Google Tag Manager.
-window.dataLayer = window.dataLayer || [];
-document.querySelectorAll('a[href^="https://wa.me/"], a[href^="mailto:"]').forEach((link) => {
-  link.addEventListener('click', () => {
-    const href = link.getAttribute('href');
-    const placement = link.closest('#menu') ? 'menu'
-      : link.closest('.hero') ? 'hero'
-      : link.closest('#consultoria') ? 'consultoria'
-      : link.closest('#apps') ? 'cases'
-      : link.closest('#prontos') ? 'sistemas_prontos'
-      : link.closest('#contato') ? 'contato'
-      : link.closest('.rodape') ? 'rodape'
-      : link.closest('.whats-flutuante') ? 'whatsapp_flutuante'
-      : 'conteudo';
-    window.dataLayer.push({
-      event: 'contact_click',
-      contact_method: href.startsWith('mailto:') ? 'email' : 'whatsapp',
-      contact_placement: placement
-    });
-  });
-});
-
 // Rolagem suave com inércia (Lenis). Sem ele, a página rola normal.
 let lenis = null;
 if (!reduzir && window.Lenis) {
@@ -40,7 +18,8 @@ document.querySelectorAll('a[href^="#"]:not(.pular)').forEach((a) => {
     const alvo = document.querySelector(a.getAttribute('href'));
     if (!alvo || !lenis) return;
     e.preventDefault();
-    lenis.scrollTo(alvo, { offset: -70 });
+    // force: o menu do celular pausa o Lenis e só o libera depois deste clique
+    lenis.scrollTo(alvo, { offset: -70, force: true });
   });
 });
 

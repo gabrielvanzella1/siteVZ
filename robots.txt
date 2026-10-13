@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /active/
+
+Sitemap: https://vztecnologia.com.br/sitemap.xml
