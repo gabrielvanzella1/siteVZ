@@ -3,6 +3,28 @@ const reduzir = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const limitar = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
 const escapar = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+// Eventos de intenção de contato: prontos para receber uma tag GA4 via Google Tag Manager.
+window.dataLayer = window.dataLayer || [];
+document.querySelectorAll('a[href^="https://wa.me/"], a[href^="mailto:"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    const href = link.getAttribute('href');
+    const placement = link.closest('#menu') ? 'menu'
+      : link.closest('.hero') ? 'hero'
+      : link.closest('#consultoria') ? 'consultoria'
+      : link.closest('#apps') ? 'cases'
+      : link.closest('#prontos') ? 'sistemas_prontos'
+      : link.closest('#contato') ? 'contato'
+      : link.closest('.rodape') ? 'rodape'
+      : link.closest('.whats-flutuante') ? 'whatsapp_flutuante'
+      : 'conteudo';
+    window.dataLayer.push({
+      event: 'contact_click',
+      contact_method: href.startsWith('mailto:') ? 'email' : 'whatsapp',
+      contact_placement: placement
+    });
+  });
+});
+
 // Rolagem suave com inércia (Lenis). Sem ele, a página rola normal.
 let lenis = null;
 if (!reduzir && window.Lenis) {
@@ -12,7 +34,8 @@ if (!reduzir && window.Lenis) {
 }
 
 // Links internos (#secao) passam pelo Lenis para manter a suavidade
-document.querySelectorAll('a[href^="#"]').forEach((a) => {
+// (menos o "Pular para o conteúdo": o salto nativo leva junto o foco do teclado)
+document.querySelectorAll('a[href^="#"]:not(.pular)').forEach((a) => {
   a.addEventListener('click', (e) => {
     const alvo = document.querySelector(a.getAttribute('href'));
     if (!alvo || !lenis) return;
@@ -56,13 +79,104 @@ document.querySelectorAll('.revela h2').forEach((h2) => {
     .map((p, i) => `<span class="pal" aria-hidden="true"><span style="--i:${i}">${escapar(p)}</span></span>`).join(' ');
 });
 
-// Manifesto: cada palavra vira um span; as de <em> ficam azuis ao acender
-const manifesto = document.querySelector('.manifesto');
-const manifestoTexto = document.querySelector('.manifesto-texto');
-const embrulhar = (texto, azul) => texto.split(/(\s+)/).map((p) => (p.trim() ? `<span class="p${azul ? ' azul' : ''}">${escapar(p)}</span>` : p)).join('');
-manifestoTexto.innerHTML = [...manifestoTexto.childNodes]
-  .map((n) => (n.nodeType === 3 ? embrulhar(n.textContent, false) : embrulhar(n.textContent, true))).join('');
-const palavrasManifesto = manifestoTexto.querySelectorAll('.p');
+// Quem somos: o editor digita o HTML da preview (que aparece crua) e depois o CSS abaixo,
+// aplicado ao vivo na preview conforme é digitado. Seletores sempre em .vz (só a preview tem essa classe); keyframes com nomes únicos.
+const cssQuemSomos = `.vz { font-family: 'Space Grotesk', sans-serif; color: #0A1A4A; }
+.vz h2 {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1.15;
+  margin: 0 0 .5em;
+  background: linear-gradient(90deg, #00B2FF, #0B40CE, #00B2FF) 0 0 / 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: brilho 4s linear infinite;
+}
+.vz p { font: 1rem/1.7 Inter, sans-serif; color: #4A5468; margin: 0 0 1em; }
+.vz ul { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: .4em 0 1.6em; list-style: none; }
+.vz li {
+  padding: 6px 16px;
+  border-radius: 99px;
+  background: #EAF0FD;
+  color: #1157EA;
+  font-weight: 600;
+  animation: boia 2.4s ease-in-out infinite;
+}
+.vz li:nth-child(even) { animation-delay: -1.2s; }
+.vz a {
+  padding: 14px 26px;
+  border-radius: 99px;
+  background: linear-gradient(135deg, #00B2FF, #2F6BFF);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  animation: onda 2s infinite;
+}
+@keyframes brilho { to { background-position: -200% 0; } }
+@keyframes boia { 50% { transform: translateY(-6px); } }
+@keyframes onda {
+  from { box-shadow: 0 0 0 0 #2F6BFF99; }
+  to { box-shadow: 0 0 0 16px #2F6BFF00; }
+}`;
+
+const ide = document.querySelector('.ide');
+const codigo = ide.querySelector('.ide-codigo');
+const estilo = document.head.appendChild(document.createElement('style'));
+const tokens = [['\n'], ['<section ', 'tg'], ['class', 'at'], ['="vz"', 'vl'], ['>', 'tg']]; // [texto, classe, elemento revelado ao terminar, é CSS]
+const escrever = (el, recuo) => {
+  const n = el.tagName.toLowerCase();
+  const folha = !el.children.length;
+  tokens.push(['\n' + recuo], [`<${n}>`, 'tg']);
+  if (folha) tokens.push([el.textContent.trim().replace(/\s+/g, ' '), 'tx']);
+  else { [...el.children].forEach((f) => escrever(f, recuo + '  ')); tokens.push(['\n' + recuo]); }
+  tokens.push([`</${n}>`, 'tg', folha && el]);
+};
+[...ide.querySelector('.ide-site').children].forEach((el) => escrever(el, '  '));
+tokens.push(['\n'], ['</section>', 'tg'], ['\n'], ['<style>', 'tg']);
+// Cores do CSS: seletor até o primeiro "{" (ou antes de outro "{"), valor depois de ":", propriedade no resto
+let antes = '';
+cssQuemSomos.split('\n').forEach((l) => {
+  tokens.push(['\n  ' + l.match(/^\s*/)[0]]);
+  const [, sel = '', resto] = l.trim().match(/^([^{]*(?=\{))?(.*)$/);
+  if (sel) tokens.push([sel, 'sel', null, true]);
+  resto.split(/([{}:;])/).filter(Boolean).forEach((p, i, ps) => {
+    const delim = p.length === 1 && '{}:;'.includes(p);
+    tokens.push([p, delim ? '' : ps[i + 1] === '{' ? 'sel' : antes === ':' ? 'vl' : 'pr', null, true]);
+    if (delim) antes = p;
+  });
+});
+tokens.push(['\n'], ['</style>', 'tg']);
+// Texto corrido sai palavra por palavra, mais rápido quanto maior: a história toda leva no máximo ~2,5 s
+const palavras = tokens.filter((t) => t[1] === 'tx').reduce((n, t) => n + t[0].split(' ').length, 0);
+const msPalavra = Math.min(30, 2500 / palavras);
+
+const cursor = document.createElement('span');
+cursor.className = 'cursor';
+let linha, trecho, cssDigitado = '';
+const depois = (ms, i, c) => (reduzir ? digitar(i, c) : setTimeout(digitar, ms, i, c));
+function digitar(i, c) {
+  if (i >= tokens.length) return;
+  const [texto, classe = '', revela, css] = tokens[i];
+  if (texto[0] === '\n') {
+    linha = codigo.appendChild(document.createElement('div'));
+    linha.append(texto.slice(1), cursor);
+    codigo.scrollTop = codigo.scrollHeight;
+    return depois(20, i + 1, 0);
+  }
+  if (c === 0) { trecho = document.createElement('span'); trecho.className = classe; cursor.before(trecho); }
+  // Código sai de 3 em 3 caracteres (o navegador não garante timers abaixo de ~10 ms)
+  const fim = classe === 'tx' ? texto.indexOf(' ', c + 1) + 1 || texto.length : Math.min(c + 3, texto.length);
+  trecho.textContent += texto.slice(c, fim);
+  // O CSS digitado entra na página a cada declaração fechada (";" ou "}"), não a cada letra
+  if (css) { cssDigitado += texto.slice(c, fim); if (texto === ';' || texto === '}') estilo.textContent = cssDigitado; }
+  if (fim < texto.length) return depois(classe === 'tx' ? msPalavra : 12, i, fim);
+  if (revela) revela.classList.add('on');
+  depois(revela ? 200 : 12, i + 1, 0);
+}
+new IntersectionObserver(([e], o) => {
+  if (!e.isIntersecting) return;
+  o.disconnect();
+  setTimeout(digitar, reduzir ? 0 : 400, 0, 0);
+}, { threshold: 0.4 }).observe(ide);
 
 // Logos: duplica cada trilho para o carrossel não ter emenda
 document.querySelectorAll('.logos-trilho').forEach((t) => {
@@ -106,6 +220,52 @@ if (!reduzir && mouseFino) {
   });
 }
 
+// Cases: as telas dos <article class="app"> vão para o aparelho e o <h3> de cada um vira botão da lista.
+// A linha .tempo do case ativo é o relógio (CSS pausa no hover); quando termina, passa para o próximo.
+const secaoApps = document.getElementById('apps');
+const aparelho = secaoApps.querySelector('.cel3d');
+const visor = aparelho.querySelector('.visor');
+const listaApps = secaoApps.querySelector('.apps-info');
+const apps = [...listaApps.querySelectorAll('.app')];
+const telasApps = apps.map((app) => visor.appendChild(app.querySelector('.tela')));
+const botoesApps = apps.map((app, i) => {
+  const h3 = app.querySelector('h3');
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.append(...h3.childNodes);
+  h3.append(b);
+  app.append(Object.assign(document.createElement('i'), { className: 'tempo' }));
+  b.addEventListener('click', () => mostrarApp(i));
+  return b;
+});
+const espera = (ms) => new Promise((r) => setTimeout(r, reduzir ? 0 : ms));
+let appAtual = -1, trocando = false;
+async function mostrarApp(i) {
+  if (trocando || i === appAtual) return;
+  trocando = true;
+  const app = apps[i];
+  // A lista abre o case na hora (e o relógio dele começa); o aparelho troca em seguida
+  apps.forEach((a, j) => a.classList.toggle('ativo', j === i));
+  botoesApps.forEach((b, j) => b.setAttribute('aria-expanded', j === i));
+  if (appAtual >= 0) {
+    telasApps[appAtual].classList.remove('aberta');
+    await espera(350);
+  }
+  // Troca de tipo de aparelho (celular, coletor, notebook): ele vira de lado, troca e volta
+  if (aparelho.dataset.tipo !== app.dataset.aparelho) {
+    if (appAtual >= 0) { aparelho.classList.add('virando'); await espera(450); }
+    aparelho.dataset.tipo = app.dataset.aparelho;
+    aparelho.classList.remove('virando');
+  }
+  secaoApps.style.setProperty('--cor', app.dataset.cor);
+  telasApps[i].classList.add('aberta');
+  appAtual = i;
+  trocando = false;
+}
+listaApps.addEventListener('animationend', (e) => e.target.classList.contains('tempo') && mostrarApp((appAtual + 1) % apps.length));
+new IntersectionObserver(([e]) => secaoApps.classList.toggle('fora', !e.isIntersecting)).observe(aparelho);
+mostrarApp(0);
+
 // Tudo o que depende da rolagem, num só lugar
 const topo = document.getElementById('topo');
 const heroConteudo = document.querySelector('.hero-conteudo');
@@ -117,7 +277,6 @@ function aoRolar() {
   document.documentElement.style.setProperty('--p', limitar(y / (document.documentElement.scrollHeight - innerHeight)));
 
   if (reduzir) {
-    palavrasManifesto.forEach((p) => p.classList.add('acesa'));
     trajetoria.style.setProperty('--progresso', 1);
     return;
   }
@@ -126,11 +285,6 @@ function aoRolar() {
   const h = limitar(y / innerHeight);
   heroConteudo.style.transform = `translateY(${h * 120}px)`;
   heroConteudo.style.opacity = 1 - h * 1.1;
-
-  // Manifesto: acende palavra por palavra
-  const m = limitar((y - manifesto.offsetTop) / (manifesto.offsetHeight - innerHeight) * 1.15);
-  const acesas = Math.round(m * palavrasManifesto.length);
-  palavrasManifesto.forEach((p, i) => p.classList.toggle('acesa', i < acesas));
 
   // Sem mouse (celular), o aparelho gira conforme passa pela tela
   if (!mouseFino) {
