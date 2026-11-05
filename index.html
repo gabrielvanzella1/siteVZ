@@ -3,14 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VZ Soluções em Tecnologia · Software house e consultoria</title>
-  <meta name="description" content="VZ Soluções em Tecnologia: desenvolvimento de apps, sistemas sob medida, sistemas prontos e consultoria em tecnologia para empresas." />
+  <title>VZ Soluções em Tecnologia · Sistemas, apps e SaaS sob medida em Jundiaí</title>
+  <meta name="description" content="Software house em Jundiaí - SP: desenvolvemos sistemas sob medida, apps, SaaS e integrações com ERP para empresas, além de consultoria em tecnologia." />
+  <link rel="canonical" href="https://vztecnologia.com.br/" />
   <meta name="theme-color" content="#1157EA" />
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+
+  <!-- Compartilhamento (WhatsApp, LinkedIn, Facebook) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="VZ Soluções em Tecnologia" />
+  <meta property="og:title" content="VZ Soluções em Tecnologia · Sistemas, apps e SaaS sob medida" />
+  <meta property="og:description" content="Software house em Jundiaí - SP: sistemas sob medida, apps, SaaS, integrações e consultoria em tecnologia." />
+  <meta property="og:url" content="https://vztecnologia.com.br/" />
+  <meta property="og:image" content="https://vztecnologia.com.br/assets/marca/og-vz.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Dados da empresa para o Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "VZ Soluções em Tecnologia",
+    "url": "https://vztecnologia.com.br/",
+    "logo": "https://vztecnologia.com.br/assets/marca/logo-vz-claro.webp",
+    "image": "https://vztecnologia.com.br/assets/marca/og-vz.jpg",
+    "description": "Software house: sistemas sob medida, apps, SaaS, integrações com ERP e consultoria em tecnologia.",
+    "telephone": "+55 11 96498-1181",
+    "email": "contato@vztecnologia.com.br",
+    "taxID": "61.274.889/0001-90",
+    "address": { "@type": "PostalAddress", "addressLocality": "Jundiaí", "addressRegion": "SP", "addressCountry": "BR" },
+    "areaServed": "BR",
+    "sameAs": ["https://www.instagram.com/vztech.tecnologia/"]
+  }
+  </script>
+  <script src="assets/analytics.js?v=20261015" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="stylesheet" href="assets/style.css?v=20261015" />
 </head>
 <body>
   <a href="#conteudo" class="pular">Pular para o conteúdo</a>
@@ -31,9 +64,11 @@
     <nav id="menu" aria-label="Principal">
       <a href="#quem-somos">Sobre</a>
       <a href="#servicos">Serviços</a>
-      <a href="#consultoria">Consultoria</a>
+      <a href="ia/">IA para empresas</a>
+      <a href="consultoria/">Consultoria</a>
       <a href="#apps">Cases</a>
       <a href="#prontos">Sistemas prontos</a>
+      <a href="blog/">Blog</a>
       <a href="https://wa.me/5511964981181?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20VZ%20e%20quero%20conversar%20sobre%20um%20projeto." class="btn btn-sm" target="_blank" rel="noopener">Fale com a gente</a>
     </nav>
   </header>
@@ -133,6 +168,31 @@
       </div>
     </section>
 
+    <!-- IA PARA EMPRESAS: chamada para a página ia/ (onde chegam os anúncios). O Ayran é a IA da VZ; cada cliente
+         tem a sua, com o nome dela. Print real do Ayran em assets/ayran/. -->
+    <section id="ia" class="secao secao-ia" data-placement="ia_home">
+      <div class="ia-bloco">
+        <div class="ia-texto revela">
+          <h2>Sua empresa com uma IA só dela.</h2>
+          <p>O Ayran é a IA da VZ. Criamos a da sua empresa: exclusiva, segura, com o nome dela e todas as informações num só lugar.</p>
+          <ul class="ia-pontos">
+            <li>Exclusiva, num ambiente só da sua empresa</li>
+            <li>Aprende com o seu negócio a cada uso</li>
+            <li>Ajuda a equipe a tomar decisões</li>
+            <li>Dados sob o controle da sua empresa</li>
+          </ul>
+          <div class="acoes">
+            <a href="https://wa.me/5511964981181?text=Ol%C3%A1!%20Vi%20a%20IA%20para%20empresas%20no%20site%20da%20VZ%20e%20quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o." class="btn btn-branco" target="_blank" rel="noopener">Agende uma demonstração</a>
+            <a href="ia/" class="btn btn-contorno">Conhecer a IA para empresas</a>
+          </div>
+        </div>
+        <figure class="tela-ayran revela">
+          <div class="ide-aba" aria-hidden="true"><i></i><i></i><i></i><span>Ayran · tela inicial</span></div>
+          <img src="assets/ayran/ayran-escuro.webp" alt="Tela inicial do Ayran, a IA da VZ, no tema futurista: relógio, saudação, campo para perguntar e atalhos para falar, chat, e-mail, agenda, tarefas e equipe" width="1560" height="757" loading="lazy" />
+        </figure>
+      </div>
+    </section>
+
     <!-- CONSULTORIA: as etapas numa linha azul que se desenha conforme a rolagem (JS ajusta --progresso) -->
     <section id="consultoria" class="secao secao-clara">
       <header class="secao-topo revela">
@@ -147,7 +207,7 @@
         <li class="revela"><span class="marco">04</span><h3>TI para empresas</h3><p>Infraestrutura, redes, inventário e suporte para a equipe.</p></li>
         <li class="revela"><span class="marco">05</span><h3>Treinamento de equipes</h3><p>Seu time aproveitando as novas ferramentas no dia a dia, com segurança.</p></li>
       </ol>
-      <p class="consultoria-cta revela"><a href="https://wa.me/5511964981181?text=Quero%20saber%20mais%20sobre%20a%20consultoria." class="btn" target="_blank" rel="noopener">Agendar uma conversa</a></p>
+      <p class="consultoria-cta revela"><a href="consultoria/" class="btn">Conheça a consultoria</a> <a href="https://wa.me/5511964981181?text=Quero%20saber%20mais%20sobre%20a%20consultoria." class="btn btn-fantasma" target="_blank" rel="noopener">Agendar uma conversa</a></p>
     </section>
 
     <!-- TECNOLOGIAS: logos coloridos -->
@@ -328,9 +388,9 @@
             <svg class="contato-icone mail" aria-hidden="true"><use href="#i-mail" /></svg>
             <span><small>E-mail</small><b>contato@vztecnologia.com.br</b></span>
           </a>
-          <a href="https://www.instagram.com/vztech.assistencia/" target="_blank" rel="noopener" class="contato-item">
+          <a href="https://www.instagram.com/vztech.tecnologia/" target="_blank" rel="noopener" class="contato-item">
             <svg class="contato-icone insta" aria-hidden="true"><use href="#i-insta" /></svg>
-            <span><small>Instagram</small><b>@vztech.assistencia</b></span>
+            <span><small>Instagram</small><b>@vztech.tecnologia</b></span>
           </a>
         </div>
         <p class="dados-empresa">VZ Soluções em Tecnologia · Jundiaí - SP · CNPJ 61.274.889/0001-90</p>
@@ -343,10 +403,14 @@
       <img class="logo-vz" src="assets/marca/logo-vz-escuro.webp" alt="" width="805" height="405" loading="lazy" />
     </a>
     <nav class="redes" aria-label="Redes sociais">
-      <a href="https://www.instagram.com/vztech.assistencia/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-insta" /></svg></a>
+      <a href="https://www.instagram.com/vztech.tecnologia/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-insta" /></svg></a>
       <a href="https://wa.me/5511964981181?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20VZ%20e%20quero%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-whats" /></svg></a>
       <a href="mailto:contato@vztecnologia.com.br" aria-label="E-mail"><svg><use href="#i-mail" /></svg></a>
     </nav>
+    <a href="ia/" class="rodape-blog">IA para empresas</a>
+    <a href="consultoria/" class="rodape-blog">Consultoria</a>
+    <a href="blog/" class="rodape-blog">Blog</a>
+    <a href="privacidade/" class="rodape-blog">Política de Privacidade</a>
     <small>© 2026 VZ Soluções em Tecnologia · Software house e consultoria<br />CNPJ&nbsp;61.274.889/0001-90</small>
   </footer>
 
@@ -356,6 +420,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" integrity="sha384-eD5ubmuCcvTdCADWuSchJYE7wcj2nzNr0itbrh6w/KJyBiltSZ8w3VFRBSWu5YQ8" crossorigin="anonymous" defer></script>
-  <script src="assets/main.js" defer></script>
+  <script src="assets/main.js?v=20261015" defer></script>
 </body>
 </html>

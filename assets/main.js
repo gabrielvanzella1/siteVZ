@@ -3,28 +3,6 @@ const reduzir = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const limitar = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
 const escapar = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-// Eventos de intenção de contato: prontos para receber uma tag GA4 via Google Tag Manager.
-window.dataLayer = window.dataLayer || [];
-document.querySelectorAll('a[href^="https://wa.me/"], a[href^="mailto:"]').forEach((link) => {
-  link.addEventListener('click', () => {
-    const href = link.getAttribute('href');
-    const placement = link.closest('#menu') ? 'menu'
-      : link.closest('.hero') ? 'hero'
-      : link.closest('#consultoria') ? 'consultoria'
-      : link.closest('#apps') ? 'cases'
-      : link.closest('#prontos') ? 'sistemas_prontos'
-      : link.closest('#contato') ? 'contato'
-      : link.closest('.rodape') ? 'rodape'
-      : link.closest('.whats-flutuante') ? 'whatsapp_flutuante'
-      : 'conteudo';
-    window.dataLayer.push({
-      event: 'contact_click',
-      contact_method: href.startsWith('mailto:') ? 'email' : 'whatsapp',
-      contact_placement: placement
-    });
-  });
-});
-
 // Rolagem suave com inércia (Lenis). Sem ele, a página rola normal.
 let lenis = null;
 if (!reduzir && window.Lenis) {
@@ -40,22 +18,25 @@ document.querySelectorAll('a[href^="#"]:not(.pular)').forEach((a) => {
     const alvo = document.querySelector(a.getAttribute('href'));
     if (!alvo || !lenis) return;
     e.preventDefault();
-    lenis.scrollTo(alvo, { offset: -70 });
+    // force: o menu do celular pausa o Lenis e só o libera depois deste clique
+    lenis.scrollTo(alvo, { offset: -70, force: true });
   });
 });
 
 // Menu do celular
 const menuBtn = document.querySelector('.menu-btn');
 const menu = document.getElementById('menu');
-const abrirMenu = (aberto) => {
-  menu.classList.toggle('aberto', aberto);
-  menuBtn.setAttribute('aria-expanded', aberto);
-  menuBtn.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
-  if (lenis) aberto ? lenis.stop() : lenis.start();
-};
-menuBtn.addEventListener('click', () => abrirMenu(!menu.classList.contains('aberto')));
-menu.addEventListener('click', (e) => e.target.closest('a') && abrirMenu(false));
-addEventListener('keydown', (e) => e.key === 'Escape' && abrirMenu(false));
+if (menuBtn && menu) {
+  const abrirMenu = (aberto) => {
+    menu.classList.toggle('aberto', aberto);
+    menuBtn.setAttribute('aria-expanded', aberto);
+    menuBtn.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+    if (lenis) aberto ? lenis.stop() : lenis.start();
+  };
+  menuBtn.addEventListener('click', () => abrirMenu(!menu.classList.contains('aberto')));
+  menu.addEventListener('click', (e) => e.target.closest('a') && abrirMenu(false));
+  addEventListener('keydown', (e) => e.key === 'Escape' && abrirMenu(false));
+}
 
 // Palavra que troca no título
 const troca = document.querySelector('.troca');
@@ -119,64 +100,66 @@ const cssQuemSomos = `.vz { font-family: 'Space Grotesk', sans-serif; color: #0A
 }`;
 
 const ide = document.querySelector('.ide');
-const codigo = ide.querySelector('.ide-codigo');
-const estilo = document.head.appendChild(document.createElement('style'));
-const tokens = [['\n'], ['<section ', 'tg'], ['class', 'at'], ['="vz"', 'vl'], ['>', 'tg']]; // [texto, classe, elemento revelado ao terminar, é CSS]
-const escrever = (el, recuo) => {
-  const n = el.tagName.toLowerCase();
-  const folha = !el.children.length;
-  tokens.push(['\n' + recuo], [`<${n}>`, 'tg']);
-  if (folha) tokens.push([el.textContent.trim().replace(/\s+/g, ' '), 'tx']);
-  else { [...el.children].forEach((f) => escrever(f, recuo + '  ')); tokens.push(['\n' + recuo]); }
-  tokens.push([`</${n}>`, 'tg', folha && el]);
-};
-[...ide.querySelector('.ide-site').children].forEach((el) => escrever(el, '  '));
-tokens.push(['\n'], ['</section>', 'tg'], ['\n'], ['<style>', 'tg']);
-// Cores do CSS: seletor até o primeiro "{" (ou antes de outro "{"), valor depois de ":", propriedade no resto
-let antes = '';
-cssQuemSomos.split('\n').forEach((l) => {
-  tokens.push(['\n  ' + l.match(/^\s*/)[0]]);
-  const [, sel = '', resto] = l.trim().match(/^([^{]*(?=\{))?(.*)$/);
-  if (sel) tokens.push([sel, 'sel', null, true]);
-  resto.split(/([{}:;])/).filter(Boolean).forEach((p, i, ps) => {
-    const delim = p.length === 1 && '{}:;'.includes(p);
-    tokens.push([p, delim ? '' : ps[i + 1] === '{' ? 'sel' : antes === ':' ? 'vl' : 'pr', null, true]);
-    if (delim) antes = p;
+if (ide) {
+  const codigo = ide.querySelector('.ide-codigo');
+  const estilo = document.head.appendChild(document.createElement('style'));
+  const tokens = [['\n'], ['<section ', 'tg'], ['class', 'at'], ['="vz"', 'vl'], ['>', 'tg']]; // [texto, classe, elemento revelado ao terminar, é CSS]
+  const escrever = (el, recuo) => {
+    const n = el.tagName.toLowerCase();
+    const folha = !el.children.length;
+    tokens.push(['\n' + recuo], [`<${n}>`, 'tg']);
+    if (folha) tokens.push([el.textContent.trim().replace(/\s+/g, ' '), 'tx']);
+    else { [...el.children].forEach((f) => escrever(f, recuo + '  ')); tokens.push(['\n' + recuo]); }
+    tokens.push([`</${n}>`, 'tg', folha && el]);
+  };
+  [...ide.querySelector('.ide-site').children].forEach((el) => escrever(el, '  '));
+  tokens.push(['\n'], ['</section>', 'tg'], ['\n'], ['<style>', 'tg']);
+  // Cores do CSS: seletor até o primeiro "{" (ou antes de outro "{"), valor depois de ":", propriedade no resto
+  let antes = '';
+  cssQuemSomos.split('\n').forEach((l) => {
+    tokens.push(['\n  ' + l.match(/^\s*/)[0]]);
+    const [, sel = '', resto] = l.trim().match(/^([^{]*(?=\{))?(.*)$/);
+    if (sel) tokens.push([sel, 'sel', null, true]);
+    resto.split(/([{}:;])/).filter(Boolean).forEach((p, i, ps) => {
+      const delim = p.length === 1 && '{}:;'.includes(p);
+      tokens.push([p, delim ? '' : ps[i + 1] === '{' ? 'sel' : antes === ':' ? 'vl' : 'pr', null, true]);
+      if (delim) antes = p;
+    });
   });
-});
-tokens.push(['\n'], ['</style>', 'tg']);
-// Texto corrido sai palavra por palavra, mais rápido quanto maior: a história toda leva no máximo ~2,5 s
-const palavras = tokens.filter((t) => t[1] === 'tx').reduce((n, t) => n + t[0].split(' ').length, 0);
-const msPalavra = Math.min(30, 2500 / palavras);
+  tokens.push(['\n'], ['</style>', 'tg']);
+  // Texto corrido sai palavra por palavra, mais rápido quanto maior: a história toda leva no máximo ~2,5 s
+  const palavras = tokens.filter((t) => t[1] === 'tx').reduce((n, t) => n + t[0].split(' ').length, 0);
+  const msPalavra = Math.min(30, 2500 / palavras);
 
-const cursor = document.createElement('span');
-cursor.className = 'cursor';
-let linha, trecho, cssDigitado = '';
-const depois = (ms, i, c) => (reduzir ? digitar(i, c) : setTimeout(digitar, ms, i, c));
-function digitar(i, c) {
-  if (i >= tokens.length) return;
-  const [texto, classe = '', revela, css] = tokens[i];
-  if (texto[0] === '\n') {
-    linha = codigo.appendChild(document.createElement('div'));
-    linha.append(texto.slice(1), cursor);
-    codigo.scrollTop = codigo.scrollHeight;
-    return depois(20, i + 1, 0);
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+  let linha, trecho, cssDigitado = '';
+  const depois = (ms, i, c) => (reduzir ? digitar(i, c) : setTimeout(digitar, ms, i, c));
+  function digitar(i, c) {
+    if (i >= tokens.length) return;
+    const [texto, classe = '', revela, css] = tokens[i];
+    if (texto[0] === '\n') {
+      linha = codigo.appendChild(document.createElement('div'));
+      linha.append(texto.slice(1), cursor);
+      codigo.scrollTop = codigo.scrollHeight;
+      return depois(20, i + 1, 0);
+    }
+    if (c === 0) { trecho = document.createElement('span'); trecho.className = classe; cursor.before(trecho); }
+    // Código sai de 3 em 3 caracteres (o navegador não garante timers abaixo de ~10 ms)
+    const fim = classe === 'tx' ? texto.indexOf(' ', c + 1) + 1 || texto.length : Math.min(c + 3, texto.length);
+    trecho.textContent += texto.slice(c, fim);
+    // O CSS digitado entra na página a cada declaração fechada (";" ou "}"), não a cada letra
+    if (css) { cssDigitado += texto.slice(c, fim); if (texto === ';' || texto === '}') estilo.textContent = cssDigitado; }
+    if (fim < texto.length) return depois(classe === 'tx' ? msPalavra : 12, i, fim);
+    if (revela) revela.classList.add('on');
+    depois(revela ? 200 : 12, i + 1, 0);
   }
-  if (c === 0) { trecho = document.createElement('span'); trecho.className = classe; cursor.before(trecho); }
-  // Código sai de 3 em 3 caracteres (o navegador não garante timers abaixo de ~10 ms)
-  const fim = classe === 'tx' ? texto.indexOf(' ', c + 1) + 1 || texto.length : Math.min(c + 3, texto.length);
-  trecho.textContent += texto.slice(c, fim);
-  // O CSS digitado entra na página a cada declaração fechada (";" ou "}"), não a cada letra
-  if (css) { cssDigitado += texto.slice(c, fim); if (texto === ';' || texto === '}') estilo.textContent = cssDigitado; }
-  if (fim < texto.length) return depois(classe === 'tx' ? msPalavra : 12, i, fim);
-  if (revela) revela.classList.add('on');
-  depois(revela ? 200 : 12, i + 1, 0);
+  new IntersectionObserver(([e], o) => {
+    if (!e.isIntersecting) return;
+    o.disconnect();
+    setTimeout(digitar, reduzir ? 0 : 400, 0, 0);
+  }, { threshold: 0.4 }).observe(ide);
 }
-new IntersectionObserver(([e], o) => {
-  if (!e.isIntersecting) return;
-  o.disconnect();
-  setTimeout(digitar, reduzir ? 0 : 400, 0, 0);
-}, { threshold: 0.4 }).observe(ide);
 
 // Logos: duplica cada trilho para o carrossel não ter emenda
 document.querySelectorAll('.logos-trilho').forEach((t) => {
@@ -223,48 +206,82 @@ if (!reduzir && mouseFino) {
 // Cases: as telas dos <article class="app"> vão para o aparelho e o <h3> de cada um vira botão da lista.
 // A linha .tempo do case ativo é o relógio (CSS pausa no hover); quando termina, passa para o próximo.
 const secaoApps = document.getElementById('apps');
-const aparelho = secaoApps.querySelector('.cel3d');
-const visor = aparelho.querySelector('.visor');
-const listaApps = secaoApps.querySelector('.apps-info');
-const apps = [...listaApps.querySelectorAll('.app')];
-const telasApps = apps.map((app) => visor.appendChild(app.querySelector('.tela')));
-const botoesApps = apps.map((app, i) => {
-  const h3 = app.querySelector('h3');
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.append(...h3.childNodes);
-  h3.append(b);
-  app.append(Object.assign(document.createElement('i'), { className: 'tempo' }));
-  b.addEventListener('click', () => mostrarApp(i));
-  return b;
-});
-const espera = (ms) => new Promise((r) => setTimeout(r, reduzir ? 0 : ms));
-let appAtual = -1, trocando = false;
-async function mostrarApp(i) {
-  if (trocando || i === appAtual) return;
-  trocando = true;
-  const app = apps[i];
-  // A lista abre o case na hora (e o relógio dele começa); o aparelho troca em seguida
-  apps.forEach((a, j) => a.classList.toggle('ativo', j === i));
-  botoesApps.forEach((b, j) => b.setAttribute('aria-expanded', j === i));
-  if (appAtual >= 0) {
-    telasApps[appAtual].classList.remove('aberta');
-    await espera(350);
+if (secaoApps) {
+  const aparelho = secaoApps.querySelector('.cel3d');
+  const visor = aparelho.querySelector('.visor');
+  const listaApps = secaoApps.querySelector('.apps-info');
+  const apps = [...listaApps.querySelectorAll('.app')];
+  const telasApps = apps.map((app) => visor.appendChild(app.querySelector('.tela')));
+  const botoesApps = apps.map((app, i) => {
+    const h3 = app.querySelector('h3');
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.append(...h3.childNodes);
+    h3.append(b);
+    app.append(Object.assign(document.createElement('i'), { className: 'tempo' }));
+    b.addEventListener('click', () => mostrarApp(i));
+    return b;
+  });
+  const espera = (ms) => new Promise((r) => setTimeout(r, reduzir ? 0 : ms));
+  let appAtual = -1, trocando = false;
+  async function mostrarApp(i) {
+    if (trocando || i === appAtual) return;
+    trocando = true;
+    const app = apps[i];
+    // A lista abre o case na hora (e o relógio dele começa); o aparelho troca em seguida
+    apps.forEach((a, j) => a.classList.toggle('ativo', j === i));
+    botoesApps.forEach((b, j) => b.setAttribute('aria-expanded', j === i));
+    if (appAtual >= 0) {
+      telasApps[appAtual].classList.remove('aberta');
+      await espera(350);
+    }
+    // Troca de tipo de aparelho (celular, coletor, notebook): ele vira de lado, troca e volta
+    if (aparelho.dataset.tipo !== app.dataset.aparelho) {
+      if (appAtual >= 0) { aparelho.classList.add('virando'); await espera(450); }
+      aparelho.dataset.tipo = app.dataset.aparelho;
+      aparelho.classList.remove('virando');
+    }
+    secaoApps.style.setProperty('--cor', app.dataset.cor);
+    telasApps[i].classList.add('aberta');
+    appAtual = i;
+    trocando = false;
   }
-  // Troca de tipo de aparelho (celular, coletor, notebook): ele vira de lado, troca e volta
-  if (aparelho.dataset.tipo !== app.dataset.aparelho) {
-    if (appAtual >= 0) { aparelho.classList.add('virando'); await espera(450); }
-    aparelho.dataset.tipo = app.dataset.aparelho;
-    aparelho.classList.remove('virando');
-  }
-  secaoApps.style.setProperty('--cor', app.dataset.cor);
-  telasApps[i].classList.add('aberta');
-  appAtual = i;
-  trocando = false;
+  listaApps.addEventListener('animationend', (e) => e.target.classList.contains('tempo') && mostrarApp((appAtual + 1) % apps.length));
+  new IntersectionObserver(([e]) => secaoApps.classList.toggle('fora', !e.isIntersecting)).observe(aparelho);
+  mostrarApp(0);
 }
-listaApps.addEventListener('animationend', (e) => e.target.classList.contains('tempo') && mostrarApp((appAtual + 1) % apps.length));
-new IntersectionObserver(([e]) => secaoApps.classList.toggle('fora', !e.isIntersecting)).observe(aparelho);
-mostrarApp(0);
+
+// Vitrine da IA (página /ia/): os botões trocam o segmento e as 6 telas mudam de cor (data-seg), nome e conteúdo.
+// Os textos ficam no JSON #vitrine-dados do HTML: data-v = texto, data-var = --v (anel), data-ligado = chave ligada.
+// Gira sozinha a cada 5 s até a pessoa escolher um segmento (pausa com o mouse em cima e fora da tela).
+const vitrine = document.querySelector('.vitrine-ia');
+if (vitrine) {
+  const dados = JSON.parse(document.getElementById('vitrine-dados').textContent);
+  const abas = [...vitrine.querySelectorAll('[data-seg-botao]')];
+  const segs = abas.map((b) => b.dataset.segBotao);
+  let atual = vitrine.dataset.seg, visivel = false;
+  const aplicar = (seg) => {
+    const d = dados[seg];
+    vitrine.dataset.seg = seg;
+    abas.forEach((b) => b.setAttribute('aria-pressed', b.dataset.segBotao === seg));
+    vitrine.querySelectorAll('[data-v]').forEach((el) => { el.textContent = d[el.dataset.v]; });
+    vitrine.querySelectorAll('[data-var]').forEach((el) => el.style.setProperty('--v', d[el.dataset.var]));
+    vitrine.querySelectorAll('[data-ligado]').forEach((el) => el.classList.toggle('on', d[el.dataset.ligado]));
+    vitrine.querySelectorAll('use[data-icone]').forEach((u) => u.setAttribute('href', '#seg-' + seg));
+    atual = seg;
+  };
+  const trocar = (seg) => {
+    if (seg === atual) return;
+    if (reduzir) return aplicar(seg);
+    vitrine.classList.add('trocando');
+    setTimeout(() => { aplicar(seg); vitrine.classList.remove('trocando'); }, 250);
+  };
+  const giro = reduzir ? 0 : setInterval(() => {
+    if (visivel && !vitrine.matches(':hover')) trocar(segs[(segs.indexOf(atual) + 1) % segs.length]);
+  }, 5000);
+  abas.forEach((b) => b.addEventListener('click', () => { clearInterval(giro); trocar(b.dataset.segBotao); }));
+  new IntersectionObserver(([e]) => { visivel = e.isIntersecting; }).observe(vitrine);
+}
 
 // Tudo o que depende da rolagem, num só lugar
 const topo = document.getElementById('topo');
@@ -277,14 +294,16 @@ function aoRolar() {
   document.documentElement.style.setProperty('--p', limitar(y / (document.documentElement.scrollHeight - innerHeight)));
 
   if (reduzir) {
-    trajetoria.style.setProperty('--progresso', 1);
+    trajetoria?.style.setProperty('--progresso', 1);
     return;
   }
 
   // Topo some devagar ao descer
-  const h = limitar(y / innerHeight);
-  heroConteudo.style.transform = `translateY(${h * 120}px)`;
-  heroConteudo.style.opacity = 1 - h * 1.1;
+  if (heroConteudo) {
+    const h = limitar(y / innerHeight);
+    heroConteudo.style.transform = `translateY(${h * 120}px)`;
+    heroConteudo.style.opacity = 1 - h * 1.1;
+  }
 
   // Sem mouse (celular), o aparelho gira conforme passa pela tela
   if (!mouseFino) {
@@ -296,8 +315,10 @@ function aoRolar() {
   }
 
   // Linha da trajetória
-  const r = trajetoria.getBoundingClientRect();
-  trajetoria.style.setProperty('--progresso', limitar((innerHeight * 0.65 - r.top) / r.height));
+  if (trajetoria) {
+    const r = trajetoria.getBoundingClientRect();
+    trajetoria.style.setProperty('--progresso', limitar((innerHeight * 0.65 - r.top) / r.height));
+  }
 
   // Formas com parallax
   paralaxe.forEach((el) => {
